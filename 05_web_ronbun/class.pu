@@ -1,4 +1,4 @@
-@startuml
+@startuml 学生クラス
 skinparam ClassAttributeIconSize 0
 class 学生 {
     -学生ID
