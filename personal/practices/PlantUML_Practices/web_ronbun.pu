@@ -1,0 +1,10 @@
+@startuml Web学生論文
+left to right direction
+actor "アクター" as fc
+rectangle システム内部 {
+  usecase "学生情報を登録する" as UC1
+  usecase "学術論文を登録する" as UC2
+}
+fc -- UC1
+fc -- UC2
+@enduml
