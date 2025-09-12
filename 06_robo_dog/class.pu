@@ -1,0 +1,16 @@
+@startuml RoboDogクラス
+skinparam ClassAttributeIconSize 0
+class RoboDog {
+    '以下５つはフィールド(属性)という
+    -名前
+    -時刻
+    -挨拶
+    -2つの整数
+    -足し算結果
+    '以下2つはメソッド(操作)という
+    +名前を変更する()
+    +時刻に応じた挨拶をする()
+    +2つの整数の足し算をする()
+}
+
+@enduml
