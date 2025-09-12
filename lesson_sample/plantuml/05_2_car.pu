@@ -1,4 +1,4 @@
-@startuml
+@startuml 車クラス 
 skinparam classAttributeIconSize 0
 class 車 {
  -メーカー
