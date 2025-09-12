@@ -1,12 +1,12 @@
-@startuml 車クラス 
+@startuml 車クラス
 skinparam classAttributeIconSize 0
 class 車 {
- -メーカー
- -色
- -走行距離
- +走る()
- +曲がる()
- +止まる()
- +走行距離を増やす()
+    -メーカー
+    -色
+    -走行距離
+    +走る()
+    +曲がる()
+    +止まる()
+    +走行距離を増やす()
 }
 @enduml
