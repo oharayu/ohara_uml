@@ -6,7 +6,7 @@ rectangle Web_Visitor {
   usecase "ログインする" as UC0
   usecase "ログアウトする" as UC2
   usecase "自分の情報を登録する" as UC3
-  usecase "自分と他の訪問者の情報を参照する()" as UC4
+  usecase "自分と他の訪問者の情報を参照する" as UC4
   usecase "自分の情報を変更する" as UC5
   usecase "自分の情報を削除する" as UC6
 }

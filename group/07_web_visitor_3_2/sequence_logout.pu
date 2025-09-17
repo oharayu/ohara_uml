@@ -1,0 +1,56 @@
+@startuml Web訪問者システム-ログアウトシーケンス図
+hide footbox
+skinparam boundaryBackgroundColor #D5E8D4
+skinparam controlBackgroundColor  #F8CECC
+skinparam entityBackgroundColor   #DAE8FC
+
+actor ユーザー as A
+boundary Web訪問者システム画面 as B1
+boundary ログアウト完了画面 as B2
+boundary ログイン画面 as B0
+
+control ログアウトボタン押下 as C1
+control セッション情報削除 as C2
+control 完了画面表示 as C3
+
+entity セッション情報 as E
+
+== 基本フロー ==
+A -> B1: ログアウトボタンを押下()
+activate B1
+
+B1 -> C1: ログアウト操作要求()
+deactivate B1
+activate C1
+
+C1 -> C2: セッション削除要求()
+deactivate C1
+activate C2
+
+C2 -> E: セッション情報を削除()
+activate E
+E --> C2: 削除成功()
+deactivate E
+
+C2 -> C3: 完了画面表示要求()
+deactivate C2
+activate C3
+
+C3 -> B2: ログアウト完了画面を表示()
+deactivate C3
+activate B2
+
+A <- B2: 完了画面を確認()
+deactivate B2
+
+== 代替フロー A1: セッションが無効 ==
+A -> B1: ログアウトボタンを押下()
+B1 -> C1: ログアウト操作要求()
+C1 -> C2: セッション削除要求()
+C2 -> E: セッション情報確認()
+E --> C2: セッション無効()
+C2 -> B0: ログイン画面へ遷移()
+activate B0
+deactivate B0
+
+@enduml
