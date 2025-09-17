@@ -1,0 +1,40 @@
+@startuml 名前変更シーケンス図
+
+skinparam BoundaryBackgroundColor #D5E8D4
+skinparam ControlBackgroundColor  #F8CECC
+skinparam EntityBackgroundColor   #DAE8FC
+
+
+actor ユーザー as user
+Boundary メニュー画面 as menu
+Boundary 名前変更画面 as nameChange
+control 名前取得 as getName
+control 名前変更 as registerName
+entity RoboDog
+
+
+user -> menu: 「名前の変更」を選択
+activate menu
+menu -> getName: 現在の名前を取得
+activate getName
+getName -> RoboDog: 名前参照
+activate RoboDog
+RoboDog --> getName: 現在の名前を返す
+deactivate RoboDog
+getName -> nameChange: 現在の名前を表示
+deactivate getName
+deactivate menu
+activate nameChange
+user -> nameChange: 新しい名前を入力
+nameChange -> registerName: 新しい名前を登録
+activate registerName
+registerName -> RoboDog: 名前保存
+activate RoboDog
+RoboDog --> registerName: 保存完了
+deactivate RoboDog
+registerName -> nameChange: 結果を表示
+deactivate registerName
+nameChange -> user: 名前の変更結果を表示
+deactivate nameChange
+
+@enduml

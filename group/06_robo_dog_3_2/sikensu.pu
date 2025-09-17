@@ -1,0 +1,19 @@
+@startuml
+actor ユーザー
+boundary メニュー画面 as Menu
+boundary 時刻入力画面 as TimeInput
+control 挨拶制御 as Control
+entity RoboDog
+entity 挨拶データ as GreetingDB
+
+ユーザー -> Menu : 挨拶を選択
+Menu -> ユーザー : 画面表示
+
+ユーザー -> TimeInput : 時刻を入力
+TimeInput -> Control : 時刻を設定
+Control -> RoboDog : 時刻を設定
+RoboDog -> Control : 挨拶を返す
+Control -> TimeInput : 結果表示
+TimeInput -> ユーザー : 時刻に応じた挨拶を表示
+
+@enduml

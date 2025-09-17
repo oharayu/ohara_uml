@@ -1,0 +1,97 @@
+<mxfile host="65bd71144e">
+    <diagram id="5DfwSMmlrQ2DYcHCKKRp" name="ページ1">
+        <mxGraphModel dx="1555" dy="604" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="ユーザー" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="30" y="200" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="" style="shape=umlBoundary;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="190" y="45" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="&lt;span style=&quot;color: rgb(0, 0, 0); text-wrap-mode: wrap;&quot;&gt;RoboDog&lt;/span&gt;&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); text-wrap-mode: wrap;&quot;&gt;システムメニュー&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="190" y="65" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="足し算画面を表示" style="ellipse;shape=umlControl;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="190" width="70" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="&lt;span style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(63, 63, 63);&quot;&gt;足し算&lt;/span&gt;&lt;div style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); text-wrap-mode: nowrap; color: rgb(63, 63, 63);&quot;&gt;&lt;span style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); text-wrap-mode: wrap; color: rgb(63, 63, 63);&quot;&gt;入力画面&lt;/span&gt;&lt;/div&gt;" style="shape=umlBoundary;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="294" y="330" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="" style="endArrow=open;endFill=1;endSize=12;html=1;entryX=-0.022;entryY=0.498;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="2" target="5">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="330" y="290" as="sourcePoint"/>
+                        <mxPoint x="490" y="290" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="18" value="" style="endArrow=open;endFill=1;endSize=12;html=1;entryX=-0.016;entryY=0.606;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.556;exitY=0.769;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="2" target="16">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="230" y="340" as="sourcePoint"/>
+                        <mxPoint x="167.62000000000012" y="325.76" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="20" value="" style="endArrow=open;endFill=1;endSize=12;html=1;exitX=1.015;exitY=0.666;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.225;entryY=0.264;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="5" target="15">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="330" y="290" as="sourcePoint"/>
+                        <mxPoint x="490" y="290" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="23" value="" style="endArrow=open;endFill=1;endSize=12;html=1;exitX=0.033;exitY=0.684;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.025;entryY=0.468;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="15" target="16">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="302" y="108" as="sourcePoint"/>
+                        <mxPoint x="440" y="231" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="24" value="足し算結果を表示" style="ellipse;shape=umlControl;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="394" y="490" width="70" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="RoboDog" style="ellipse;shape=umlEntity;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="730" y="370" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="" style="endArrow=open;endFill=1;endSize=12;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1.017;exitY=0.681;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=open;startFill=0;" edge="1" parent="1" source="37" target="27">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="620" y="400" as="sourcePoint"/>
+                        <mxPoint x="630" y="470" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="29" value="" style="endArrow=open;endFill=1;endSize=12;html=1;entryX=0.979;entryY=0.437;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.259;exitY=0.981;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="37" target="24">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="510" y="560" as="sourcePoint"/>
+                        <mxPoint x="630" y="400" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="31" value="足し算結果&lt;div&gt;表示画面&lt;/div&gt;" style="shape=umlBoundary;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="160" y="490" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="" style="endArrow=open;endFill=1;endSize=12;html=1;entryX=1.014;entryY=0.615;entryDx=0;entryDy=0;exitX=0.021;exitY=0.615;exitDx=0;exitDy=0;entryPerimeter=0;exitPerimeter=0;" edge="1" parent="1" source="24" target="31">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="642" y="428" as="sourcePoint"/>
+                        <mxPoint x="493" y="475" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="37" value="&lt;span style=&quot;color: rgb(0, 0, 0); text-wrap-mode: nowrap;&quot;&gt;二つの整数&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;color: rgb(0, 0, 0); text-wrap-mode: nowrap;&quot;&gt;を登録&lt;/span&gt;&lt;/div&gt;" style="ellipse;shape=umlControl;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="570" y="350" width="70" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" value="" style="endArrow=open;endFill=1;endSize=12;html=1;entryX=-0.015;entryY=0.669;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.992;exitY=0.643;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="16" target="37">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="400" y="380" as="sourcePoint"/>
+                        <mxPoint x="178" y="336" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="41" value="" style="endArrow=open;endFill=1;endSize=12;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;exitX=1.004;exitY=0.659;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=open;startFill=0;" edge="1" parent="1" source="24" target="27">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="470" y="540" as="sourcePoint"/>
+                        <mxPoint x="540" y="340" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="42" value="足し算を選択()" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="120" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" value="&lt;span style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(0, 0, 0);&quot;&gt;二つの整数を&lt;/span&gt;&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); text-wrap-mode: wrap;&quot;&gt;&lt;span style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); text-wrap-mode: nowrap; color: rgb(0, 0, 0);&quot;&gt;入力()&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="140" y="270" width="100" height="40" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
