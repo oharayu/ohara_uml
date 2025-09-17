@@ -3,13 +3,17 @@ left to right direction
 actor ユーザー as U
 
 rectangle Web_Visitor {
-  usecase "登録する" as UC1
-  usecase "参照する" as UC2
-  usecase "変更する" as UC3
-  usecase "削除する" as UC4
+  usecase "ログインする" as UC0
+  usecase "ログアウトする" as UC2
+  usecase "自分の情報を登録する" as UC3
+  usecase "自分と他の訪問者の情報を参照する()" as UC4
+  usecase "自分の情報を変更する" as UC5
+  usecase "自分の情報を削除する" as UC6
 }
-U --> UC1
+U --> UC0
 U --> UC2
 U --> UC3
 U --> UC4
+U --> UC5
+U --> UC6
 @enduml
