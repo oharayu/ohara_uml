@@ -1,0 +1,15 @@
+@startuml Web_Visitorユースケース図
+left to right direction
+actor ユーザー as U
+
+rectangle Web_Visitor {
+  usecase "登録する" as UC1
+  usecase "参照する" as UC2
+  usecase "変更する" as UC3
+  usecase "削除する" as UC4
+}
+U --> UC1
+U --> UC2
+U --> UC3
+U --> UC4
+@enduml
