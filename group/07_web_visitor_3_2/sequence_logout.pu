@@ -45,12 +45,26 @@ deactivate B2
 
 == 代替フロー A1: セッションが無効 ==
 A -> B1: ログアウトボタンを押下()
+activate B1
+
 B1 -> C1: ログアウト操作要求()
+deactivate B1
+activate C1
+
 C1 -> C2: セッション削除要求()
+deactivate C1
+activate C2
+
 C2 -> E: セッション情報確認()
+activate E
 E --> C2: セッション無効()
+deactivate E
+
 C2 -> B0: ログイン画面へ遷移()
+deactivate C2
 activate B0
+
+A <- B0: ログイン画面を確認()
 deactivate B0
 
 @enduml
