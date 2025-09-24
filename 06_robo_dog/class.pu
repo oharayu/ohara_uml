@@ -3,25 +3,26 @@ skinparam classAttributeIconSize 0
 hide circle
  
 class RoboDog {
--myName
--myTime
--goodMorning
--goodAfternoon
--goodEvening
--firstValue
--secondvValue
+-myName: String
+'datetime型でいいのでは？
+-myTime: int
+-goodMorning: String
+-goodAfternoon: String
+-goodEvening: String
+-firstValue: int
+-secondvValue: int
 
 '教科書に記載なし
--result
+-result: int
  
-+getMyName()
-+setMyName()
-+setNewTime()
-+getMyGreeting()
++getMyName(): String
++setMyName(): int
++setNewTime(): void
++getMyGreeting(): String
 
 '教科書に記載なし
-+setTwoValues()
-+setAndGetResult()
++setTwoValues(): void
++setAndGetResult(): int
 }
  
 @enduml
