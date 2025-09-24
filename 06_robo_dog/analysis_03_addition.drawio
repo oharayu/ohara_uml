@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="5DfwSMmlrQ2DYcHCKKRp" name="ページ1">
-        <mxGraphModel dx="636" dy="767" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="875" dy="767" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -13,14 +13,14 @@
                 <mxCell id="16" value="AddNumbersData.htm" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#FF3333;fontStyle=1" vertex="1" parent="1">
                     <mxGeometry x="210" y="290" width="140" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="17" value="&lt;font style=&quot;color: rgb(255, 51, 51);&quot;&gt;setFirstVlaue()&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=10;fontStyle=1" vertex="1" parent="1">
-                    <mxGeometry x="375" y="290" width="90" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="18" value="&lt;font style=&quot;color: rgb(255, 51, 51);&quot;&gt;setfSecondVlaue()&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=10;fontStyle=1" vertex="1" parent="1">
-                    <mxGeometry x="355" y="300" width="110" height="30" as="geometry"/>
-                </mxCell>
                 <mxCell id="19" value="RoboDog.java" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#FF3333;fontStyle=1" vertex="1" parent="1">
                     <mxGeometry x="640" y="350" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="&lt;font style=&quot;color: rgb(255, 51, 51);&quot;&gt;setTwoValues()&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="370" y="290" width="110" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="&lt;font style=&quot;color: rgb(255, 51, 51);&quot;&gt;setAndGetResult()&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="370" y="410" width="120" height="30" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
