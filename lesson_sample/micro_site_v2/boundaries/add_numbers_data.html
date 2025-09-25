@@ -1,0 +1,16 @@
+<html>
+<head><meta charset="utf-8"><title>足し算をする</title></head>
+<body>
+    <h1>足し算をする</h1>
+    <!-- first_value, second_value の入力・送信 -->
+  <form action="/calc" method="post">
+    <p>一つ目の整数: <input type="number" name="first_value" required></p>
+    <p>二つ目の整数: <input type="number" name="second_value" required"></p>
+    <input type="submit" value="足し算送信">
+  </form>
+
+    <!-- 足し算の結果 addition -->
+     <p>足し算の結果: {addition}</p></p>
+    <p><a href="/">メインメニューに戻る</a></p>
+</body>
+</html>

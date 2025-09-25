@@ -10,4 +10,4 @@ def change_my_name_data(environ):
         name = data.get("name", [""])[0]
         set_my_name(name)
 
-    return render_template("boundaries/change_my_name.html", name=name, name_display=name or "未設定")
+    return render_template("boundaries/name.html", name=name, name_display=name or "未設定")
