@@ -1,0 +1,72 @@
+@startuml Sequence Diagram: 出荷準備 (Robustness図準拠)
+
+actor "倉庫担当者" as User
+
+box "システム"
+  participant "出荷指示一覧画面" as ScrList
+  participant "出荷指示詳細画面" as ScrDetail
+  control "出荷準備制御" as Ctl
+  database "出荷指示データ" as EOrder
+  database "配送依頼データ" as EDelivery
+  boundary "配送業者連携API" as BAPI
+end box
+
+' 1. システムは、出荷指示一覧画面を表示する。
+User -> ScrList : 画面表示要求 (アクセス)
+ScrList -> Ctl : 指示リスト取得要求
+activate Ctl
+Ctl -> EOrder : 指示データ検索
+activate EOrder
+EOrder --> Ctl : データ返却
+deactivate EOrder
+Ctl --> ScrList : リスト表示
+deactivate Ctl
+
+' 2. 倉庫担当者は、出荷対象を選択する。
+User -> ScrList : 対象選択
+
+' 3. システムは、選択した出荷指示の詳細情報を表示する。
+ScrList -> Ctl : 詳細情報要求(ID)
+activate Ctl
+Ctl -> EOrder : 詳細データ取得
+activate EOrder
+EOrder --> Ctl : 詳細データ
+deactivate EOrder
+Ctl --> ScrDetail : 詳細情報表示
+deactivate Ctl
+
+' 4. 倉庫担当者は、出荷準備（ピッキング作業）を完了したことをシステムに登録する。
+User -> ScrDetail : 完了登録
+
+ScrDetail -> Ctl : 登録要求
+activate Ctl
+
+' 5. システムは、出荷依頼を登録し「出荷準備完了」メッセージを表示する。
+Ctl -> EOrder : ステータス更新 (完了)
+activate EOrder
+EOrder --> Ctl
+deactivate EOrder
+
+Ctl -> EDelivery : 配送依頼データ登録
+activate EDelivery
+EDelivery --> Ctl
+deactivate EDelivery
+
+Ctl -> ScrDetail : 「出荷準備完了」メッセージ表示
+
+' 6. 倉庫担当者は、配送業者に配送依頼を送信する（API）。
+User -> BAPI : 配送依頼送信要求
+BAPI -> Ctl : 依頼送信データ
+
+' 7. 倉庫担当者は、配送依頼受注のメッセージを確認する。
+Ctl -> BAPI : 依頼送信実行
+activate BAPI
+BAPI -> Ctl : 配送依頼受注通知
+deactivate BAPI
+
+Ctl -> ScrDetail : 受注完了メッセージ表示
+deactivate Ctl
+
+User <- ScrDetail : メッセージ確認
+
+@enduml
