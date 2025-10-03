@@ -1,0 +1,77 @@
+@startuml 図書予約シーケンス図
+title 図書予約 (UC0)
+
+actor 事務職員
+boundary システム as Sys <<画面/コントローラ>>
+database 会員DB
+database 図書DB
+database 予約DB
+
+事務職員 -> Sys : ① 予約メニュー押下
+activate Sys
+Sys --> 事務職員 : ② 図書予約画面表示
+
+== 会員情報入力・検証 ==
+事務職員 -> Sys : ③ 会員番号入力 (確定)
+alt 会員番号が未入力または未登録の場合 (代替フロー①)
+    Sys -> 会員DB : 会員情報検索(会員番号)
+    alt 会員情報が見つからない
+        Sys -> Sys : 会員情報取得失敗
+        Sys -> 事務職員 : ①-1 「会員番号を確認してください」メッセージ表示
+        deactivate Sys
+        事務職員 -> Sys : ①-2 基本フロー③へ (再入力)
+        activate Sys
+    else 会員番号が有効
+        Sys -> Sys : 会員情報取得成功
+        Sys -> 事務職員 : ④ 会員の氏名、会員種別を表示
+    end
+end
+
+== 図書検索・検証 ==
+事務職員 -> Sys : ⑤ 書名入力 (検索)
+alt 書名が未入力の場合 (代替フロー②)
+    Sys -> 事務職員 : ②-1 「書名を入力してください」メッセージ表示
+    deactivate Sys
+    事務職員 -> Sys : ②-2 基本フロー⑤へ (再入力)
+    activate Sys
+else 該当図書がない場合 (代替フロー③)
+    Sys -> 図書DB : 図書検索(書名)
+    alt 該当図書が見つからない
+        Sys -> 事務職員 : ③-1 「該当する図書が見つかりません」メッセージ表示
+        deactivate Sys
+        事務職員 -> Sys : ③-2 基本フロー⑤へ (再入力)
+        activate Sys
+    else 該当図書が見つかる
+        Sys -> Sys : 検索結果格納
+        Sys -> 事務職員 : ⑥ 図書一覧（書名、著者、出版社）を表示
+    end
+end
+
+== 予約確定・制約検証 ==
+事務職員 -> Sys : ⑦ 図書一覧から該当図書の予約を押下
+
+alt 学生が雑誌を予約する場合 (代替フロー④)
+    Sys -> Sys : 会員種別と図書種別チェック
+    alt 学生 AND 雑誌
+        Sys -> 事務職員 : ④-1 「学生は雑誌を予約できません」メッセージ表示
+        deactivate Sys
+        事務職員 -> Sys : ④-2 基本フロー⑤へ
+        activate Sys
+    else 予約可能 (教職員 or 学生 AND 書籍)
+        Sys -> 図書DB : 図書の貸出状況確認(ISBN)
+        alt 未貸し出しの本がある場合 (代替フロー⑤)
+            Sys -> 事務職員 : ⑤-1 「在庫があります」メッセージ表示
+            deactivate Sys
+            事務職員 -> Sys : ⑤-2 基本フロー⑤へ
+            activate Sys
+        else 全て貸出中（予約可能）
+            Sys -> 予約DB : ⑧ 予約情報登録 (ISBN, 会員番号, 予約日時)
+            Sys -> Sys : 予約情報登録成功
+            Sys -> 事務職員 : ⑧ 予約完了画面を表示
+        end
+    end
+end
+
+deactivate Sys
+
+@enduml
