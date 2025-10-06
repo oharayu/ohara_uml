@@ -1,0 +1,89 @@
+@startuml 図書返却シーケンス図
+
+hide footbox
+skinparam boundaryBackgroundColor #D5E8D4
+skinparam controlBackgroundColor  #F8CECC
+skinparam entityBackgroundColor   #DAE8FC
+
+' ロバストネス図のオブジェクトを反映
+actor 事務職員
+actor 予約者
+boundary "返却一覧画面" as UI
+boundary "返却完了画面" as UI2
+control 読み取り処理 as ReadCtrl
+control 更新処理 as UpdateCtrl
+entity "図書DB" as DB
+
+autonumber
+
+' == メニュー操作 ==
+事務職員 -> UI: 返却メニューを押下する
+activate UI
+UI --> 事務職員: 返却一覧画面を表示
+
+' == 基本フロー：図書管理番号の入力と読み取り (ロバストネス図の「読み取り」に対応) ==
+loop 複数の図書を返却する場合 (基本フロー ④〜⑦の繰り返し)
+    
+    事務職員 -> UI: 管理番号を入力する
+    UI -> ReadCtrl: 管理番号から情報読み取り(管理番号)
+    activate ReadCtrl
+    
+    ReadCtrl -> DB: 図書情報照会
+    activate DB
+    DB --> ReadCtrl: 図書情報(返却期限、 予約の有無、予約者情報以外)
+    deactivate DB
+    
+    alt 管理番号が登録されていなかった場合 (代替フロー1)
+        ReadCtrl -> UI: 「管理番号を確認してください」メッセージ
+        UI --> 事務職員: メッセージ表示
+        
+    else 図書が貸し出し中でなかった場合 (代替フロー3)
+        ReadCtrl -> UI: 「この図書は貸し出しされていません」メッセージ
+        UI --> 事務職員: メッセージ表示
+
+    else 正常系
+        ReadCtrl -> ReadCtrl: 返却期限/予約の有無をチェック
+        
+        alt 図書の返却期限を過ぎていた場合 (代替フロー2)
+            ReadCtrl -> UI: 「期限超過。注意」メッセージと情報(赤字)
+        
+        else 図書が予約されている場合 (代替フロー5)
+            ReadCtrl -> ReadCtrl: 最も古い予約者を確認
+            ReadCtrl -> 予約者: 利用者に通知を送信
+            ReadCtrl -> UI: 「予約あり。予約カウンターへ」メッセージと情報(青字)
+
+        else 基本フロー続行
+            ' 特記事項なし
+        end
+        
+        ReadCtrl -> UI: 図書情報を一覧に表示
+    end
+    
+    deactivate ReadCtrl
+    UI --> 事務職員: 返却一覧を表示
+end loop
+
+' == 基本フロー：返却の確定と更新 (ロバストネス図の「更新」に対応) ==
+事務職員 -> UI: 返却ボタン押下する
+
+opt 返却する図書が一つも入力されていなかった場合 (代替フロー4)
+    UI -> UI: 「返却する図書が入力されていません」メッセージを表示
+    UI --> 事務職員: メッセージ表示
+else 図書が入力されている場合
+    UI -> UpdateCtrl: 図書の状態更新(返却リスト)
+    deactivate UI
+    activate UpdateCtrl
+    
+    UpdateCtrl -> DB: 図書の状態更新(返却日、予約ステータス等)
+    activate DB
+    DB --> UpdateCtrl: 更新完了
+    deactivate DB
+    
+    UpdateCtrl -> UI2: 返却完了画面を表示
+    deactivate UpdateCtrl
+    activate UI2
+    
+    UI2 --> 事務職員: 返却完了画面を表示
+    deactivate UI2
+end
+@enduml

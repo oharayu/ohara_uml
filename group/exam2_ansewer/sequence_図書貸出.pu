@@ -1,0 +1,82 @@
+@startuml
+
+skinparam boundaryBackgroundColor #D5E8D4
+skinparam controlBackgroundColor  #F8CECC
+skinparam entityBackgroundColor   #DAE8FC
+
+title 図書貸出処理シーケンス図
+actor 事務職員
+boundary メニュー画面
+boundary 図書貸出画面
+boundary 貸出完了画面
+control 図書貸出画面処理
+control 貸出処理
+entity 会員DB
+entity 図書DB
+entity 貸出履歴DB
+
+== メインフロー ==
+事務職員 -> メニュー画面 : 貸出メニュー押下
+activate 事務職員
+activate メニュー画面
+deactivate メニュー画面
+メニュー画面 -> 図書貸出画面処理 : 貸出画面表示要求
+activate 図書貸出画面処理
+図書貸出画面処理 ->図書貸出画面: 貸出画面表示
+deactivate 図書貸出画面処理
+activate 図書貸出画面
+事務職員 -> 図書貸出画面 : 会員番号入力・確定
+図書貸出画面 -> 貸出処理 : 会員情報照会要求
+activate 貸出処理
+貸出処理 -> 会員DB : 会員番号検索
+activate 会員DB
+会員DB --> 貸出処理 : 氏名・会員種別
+deactivate 会員DB
+alt 会員番号未入力・未登録
+  貸出処理 --> 図書貸出画面 : エラーメッセージ表示（代替フロー①）
+end
+alt 管理番号未入力・未登録
+  貸出処理 --> 図書貸出画面 : エラーメッセージ表示（代替②）
+end
+貸出処理 --> 図書貸出画面 : 会員情報表示
+
+
+事務職員 -> 図書貸出画面 : 管理番号入力・確定
+図書貸出画面 -> 貸出処理 : 図書情報照会要求
+貸出処理 -> 図書DB : 管理番号検索
+activate 図書DB
+図書DB --> 貸出処理 : 書名
+deactivate 図書DB
+alt 貸出上限超過 or 学生が雑誌貸出
+  貸出処理 --> 図書貸出画面 : 貸出不可メッセージ（代替③）
+end
+alt 貸出図書キャンセル
+  図書貸出画面 --> 貸出処理 : キャンセル要求
+  貸出処理 --> 図書貸出画面 : 貸出一覧から削除（代替④）
+end
+貸出処理 --> 図書貸出画面 : 貸出一覧に書名表示
+
+
+loop 複数貸出時
+end
+事務職員 -> 図書貸出画面 : 貸出ボタン押下
+deactivate 事務職員
+図書貸出画面 -> 貸出処理 : 貸出確定要求
+貸出処理 -> 貸出履歴DB : 貸出情報登録
+activate 貸出履歴DB
+deactivate 貸出履歴DB
+alt 一冊も確定していない
+  貸出処理 --> 図書貸出画面 : エラーメッセージ表示（代替⑤）
+  deactivate 図書貸出画面
+end
+貸出処理 --> 貸出完了画面 : 貸出完了画面表示
+activate 貸出完了画面
+deactivate 貸出完了画面
+deactivate 貸出処理
+
+
+
+
+
+
+@enduml

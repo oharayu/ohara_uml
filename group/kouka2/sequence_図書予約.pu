@@ -1,0 +1,125 @@
+@startuml
+hide footbox
+
+' ★色設定
+skinparam boundary {
+  BackgroundColor #D5E8D4
+}
+skinparam entity {
+  BackgroundColor #DAE8FC
+}
+skinparam control {
+  BackgroundColor #F8CECC
+}
+
+title 図書予約シーケンス図
+
+' オブジェクト定義
+actor "事務職員" as Staff
+boundary "メニュー画面" as MenuScreen
+boundary "図書予約画面" as ReserveScreen
+boundary "会員詳細画面" as MemberDetailScreen
+boundary "書名入力画面" as SearchScreen
+boundary "図書一覧画面" as BookListScreen
+boundary "予約完了画面" as CompleteScreen
+control "予約処理" as ReserveControl
+entity "会員DB" as MemberDB
+entity "図書DB" as BookDB
+
+' ---- 事前条件 ----
+' メニュー画面が表示されていること
+
+Staff -> MenuScreen : ① 予約メニューを押下
+activate MenuScreen
+MenuScreen -> ReserveScreen : 図書予約画面を表示
+activate ReserveScreen
+deactivate MenuScreen
+
+' --- 会員番号入力 ---
+Staff -> ReserveScreen : ② 会員番号を入力し、確定
+ReserveScreen -> ReserveControl : 会員番号照合要求(会員番号)
+activate ReserveControl
+ReserveControl -> MemberDB : 会員情報を検索(会員番号)
+activate MemberDB
+MemberDB --> ReserveControl : 会員情報 or null
+deactivate MemberDB
+
+alt 会員番号が未入力または未登録の場合（代替フロー①）
+    ReserveControl -> ReserveScreen : エラーメッセージ表示("会員番号を確認してください")
+    ReserveScreen -> Staff : メッセージを表示
+else
+    ReserveControl -> MemberDetailScreen : 会員詳細画面を表示（会員氏名・会員種別）
+    deactivate ReserveScreen
+    activate MemberDetailScreen
+end
+
+' --- 書名入力 ---
+Staff -> MemberDetailScreen : ③ 書名入力画面へ遷移
+MemberDetailScreen -> SearchScreen : 書名入力画面を表示
+deactivate MemberDetailScreen
+activate SearchScreen
+
+Staff -> SearchScreen : ④ 書名を入力し、検索を押下
+SearchScreen -> ReserveControl : 書名照合要求(書名)
+ReserveControl -> BookDB : 図書検索(書名)
+activate BookDB
+BookDB --> ReserveControl : 該当図書リスト or null
+deactivate BookDB
+
+alt 書名が未入力の場合（代替フロー②）
+    ReserveControl -> SearchScreen : エラーメッセージ表示("書名を入力してください")
+    SearchScreen -> Staff : メッセージを表示
+
+else 該当図書なし（代替フロー③）
+    ReserveControl -> SearchScreen : エラーメッセージ表示("該当する図書が見つかりません")
+    SearchScreen -> Staff : メッセージを表示
+
+else 該当図書あり
+    ReserveControl -> BookListScreen : 図書一覧画面を表示(書名, 著者, 出版社)
+    deactivate SearchScreen
+    activate BookListScreen
+
+    ' --- 図書予約 ---
+    Staff -> BookListScreen : ⑤ 該当図書の予約を押下
+    BookListScreen -> ReserveControl : 予約要求(ISBN, 会員番号)
+    ReserveControl -> MemberDB : 会員種別を確認
+    activate MemberDB
+    MemberDB --> ReserveControl : 会員種別
+    deactivate MemberDB
+
+    alt 学生が雑誌を予約する場合（代替フロー④）
+        ReserveControl -> BookListScreen : エラーメッセージ表示("学生は雑誌を予約できません")
+        BookListScreen -> Staff : メッセージを表示
+
+    else 教職員または通常の図書予約
+        ReserveControl -> BookDB : 在庫確認(ISBN)
+        activate BookDB
+        BookDB --> ReserveControl : 在庫状況
+        deactivate BookDB
+
+        alt 図書に未貸し出しの本がある場合（代替フロー⑤）
+            ReserveControl -> BookListScreen : エラーメッセージ表示("在庫があります")
+            BookListScreen -> Staff : メッセージを表示
+
+        else 正常系（予約処理）
+            ReserveControl -> BookDB : 予約情報を登録(ISBN, 会員番号, 予約日時)
+            activate BookDB
+            BookDB --> ReserveControl : 登録完了
+            deactivate BookDB
+
+            ReserveControl -> CompleteScreen : 予約完了画面を表示
+            deactivate BookListScreen
+            activate CompleteScreen
+            CompleteScreen -> Staff : 予約完了メッセージを表示
+            deactivate CompleteScreen
+        end
+    end
+end
+
+' ---- 事後条件 ----
+' ① 予約情報がDBに登録されていること
+' ② 予約完了画面が表示されていること
+
+deactivate ReserveControl
+
+@enduml
