@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>絵日記エディタ</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; background: #fafafa; }
+    canvas { border: 2px solid #333; border-radius: 10px; margin: 10px 0; background: #fff; touch-action: none; }
+    .toolbar { margin: 10px; }
+    button { margin: 3px; padding: 5px 10px; font-size: 14px; }
+    textarea { width: 400px; height: 80px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+  <h2>🖋 絵日記エディタ</h2>
+  <div class="toolbar">
+    <button onclick="setTool('pen')">✏ ペン</button>
+    <button onclick="setTool('eraser')">🩹 消しゴム</button>
+    <button onclick="undo()">↩ 戻る</button>
+    <button onclick="redo()">↪ 進む</button>
+    <input type="color" id="colorPicker" value="#000000" onchange="setColor(this.value)">
+  </div>
+
+  <canvas id="canvas" width="400" height="300"></canvas><br>
+
+  <textarea id="text" placeholder="今日の日記を入力..."></textarea><br>
+  <button onclick="submitDiary()">💾 保存して送信</button>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    let drawing = false;
+    let tool = "pen";
+    let strokeColor = "#000000";
+    let strokeWidth = 2;
+
+    let undoStack = [];
+    let redoStack = [];
+
+    // --- マウス＆タッチイベント登録 ---
+    function getPos(e) {
+      if (e.touches) e = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+
+    function startDraw(e) {
+      drawing = true;
+      ctx.beginPath();
+      const pos = getPos(e);
+      ctx.moveTo(pos.x, pos.y);
+      saveState();
+    }
+
+    function draw(e) {
+      if (!drawing) return;
+      const pos = getPos(e);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.strokeStyle = tool === "eraser" ? "#FFFFFF" : strokeColor;
+      ctx.lineWidth = tool === "eraser" ? 20 : strokeWidth;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.stroke();
+    }
+
+    function endDraw() {
+      drawing = false;
+      ctx.closePath();
+    }
+
+    canvas.addEventListener("mousedown", startDraw);
+    canvas.addEventListener("mousemove", draw);
+    canvas.addEventListener("mouseup", endDraw);
+    canvas.addEventListener("mouseout", endDraw);
+    canvas.addEventListener("touchstart", e => { e.preventDefault(); startDraw(e); });
+    canvas.addEventListener("touchmove", e => { e.preventDefault(); draw(e); });
+    canvas.addEventListener("touchend", endDraw);
+
+    // --- ツール系関数 ---
+    function setTool(t) { tool = t; }
+    function setColor(c) { strokeColor = c; }
+
+    // --- Undo / Redo 機能 ---
+    function saveState() {
+      undoStack.push(canvas.toDataURL());
+      redoStack = []; // 新しい描画後は進む履歴を消す
+    }
+
+    function undo() {
+      if (undoStack.length > 0) {
+        redoStack.push(canvas.toDataURL());
+        const img = new Image();
+        img.src = undoStack.pop();
+        img.onload = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0);
+        };
+      }
+    }
+
+    function redo() {
+      if (redoStack.length > 0) {
+        undoStack.push(canvas.toDataURL());
+        const img = new Image();
+        img.src = redoStack.pop();
+        img.onload = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0);
+        };
+      }
+    }
+
+    // --- 保存＆送信機能 ---
+    function submitDiary() {
+      const image_base64 = canvas.toDataURL("image/png");
+      const text = document.getElementById("text").value;
+
+      const formData = new FormData();
+      formData.append("image_base64", image_base64);
+      formData.append("text", text);
+
+      fetch("/api/upload_diary", {
+        method: "POST",
+        body: formData
+      })
+      .then(r => r.json())
+      .then(res => alert("送信完了: " + res.status))
+      .catch(err => alert("エラー: " + err));
+    }
+  </script>
+
+</body>
+</html>
